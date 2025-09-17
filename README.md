@@ -30,11 +30,29 @@ AWS Cloud Development Kit exercises using Java to test practical CDK and AWS ski
 ```bash
 # Clone and setup
 git clone git@github.com:Realtyka/real-interview-setup.git
-cd real-interview-setup
+
+
+# k8s setup
+cd real-interview-setup/k8s-setup
 
 # Setup Kubernetes environment
 ./setup-cluster.sh
-
 # Verify setup
 ./verify-setup.sh
 
+# terraform setup
+cd real-interview-setup/terraform-setup
+
+# Setup Terraform environment
+./setup-terraform.sh
+# Verify setup
+./verify-terraform.sh
+
+
+# cdk setup
+cd real-interview-setup/cdk-setup
+
+# Setup CDK environment
+./setup-java-cdk.sh
+# Verify setup
+verify-java-cdk.sh

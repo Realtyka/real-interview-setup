@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  localstack:
+    container_name: java-cdk-localstack
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"            # LocalStack Gateway
+      - "4510-4559:4510-4559"  # External services port range
+    environment:
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=lambda,s3,apigateway,dynamodb,iam,cloudformation,logs
+      - LAMBDA_EXECUTOR=docker
+      - LAMBDA_REMOVE_CONTAINERS=true
+      - DOCKER_NETWORK=java-cdk-network
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - PERSISTENCE=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - java-cdk-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  java-cdk-network:
+    driver: bridge

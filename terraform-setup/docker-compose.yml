@@ -1,0 +1,37 @@
+services:
+  localstack:
+    container_name: terraform-localstack
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"            # LocalStack Gateway
+      - "4510-4559:4510-4559"  # External services port range
+    environment:
+      - SERVICES=s3,ec2,iam,lambda,apigateway,cloudformation,sts,ssm,secretsmanager,route53,elbv2,autoscaling,cloudwatch,logs
+      - DEBUG=1
+      - PERSISTENCE=0
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - terraform-network
+
+  terraform-test-runner:
+    image: hashicorp/terraform:1.6.0
+    container_name: terraform-test-runner
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566
+    depends_on:
+      - localstack
+    networks:
+      - terraform-network
+    command: tail -f /dev/null  # Keep container running
+
+networks:
+  terraform-network:
+    driver: bridge

@@ -1,0 +1,20 @@
+{
+  "version": "0.1",
+  "default_region": "us-east-1",
+  "services": {
+    "lambda": {
+      "create_async_event_source_mapping": true,
+      "lambda_use_docker": true,
+      "lambda_docker_network": "java-cdk-network"
+    },
+    "s3": {
+      "addressing_style": "path"
+    },
+    "apigateway": {
+      "load_balancer_endpoint": "http://localhost:4566"
+    },
+    "dynamodb": {
+      "ddb_streams": true
+    }
+  }
+}
