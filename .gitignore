@@ -1,0 +1,52 @@
+# Kubernetes Interview Assessment .gitignore
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+logs/
+
+# Backup files
+*.bak
+*.backup
+
+# Local configuration
+local-config/
+.env.local
+
+# Exercise solutions (for candidates)
+exercises/*/solution/
+exercises/*/hints.md
+
+# Cluster state files
+cluster-state/
+kubeconfig.local
+
+# Docker volumes
+docker-volumes/
+
+# Node modules (if any)
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Go modules
+go.mod
+go.sum
+
+# Helm charts
+charts/
