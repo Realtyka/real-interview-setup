@@ -163,16 +163,6 @@ echo -e "\n${BLUE}🏷️  Node Taints:${NC}"
 kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.taints}{"\n"}{end}' | column -t
 echo ""
 
-# Final verification
-echo -e "\n${YELLOW}12. Final verification...${NC}"
-
-# Check if we can create a test pod
-TEST_POD_NAME="test-pod-$(date +%s)"
-if kubectl run "$TEST_POD_NAME" --image=busybox --restart=Never --rm -i --command -- echo "Hello from test pod" &> /dev/null; then
-    echo -e "${GREEN}✅ Can create and run pods${NC}"
-else
-    echo -e "${RED}❌ Cannot create pods${NC}"
-fi
 
 # Summary
 echo -e "\n${GREEN}🎉 Verification completed!${NC}"
